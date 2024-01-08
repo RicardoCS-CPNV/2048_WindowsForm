@@ -1,0 +1,10 @@
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\bin\Debug\2048_WindowsForm.exe.config
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\bin\Debug\2048_WindowsForm.exe
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\bin\Debug\2048_WindowsForm.pdb
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\2048_WindowsForm.csproj.AssemblyReference.cache
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\_2048_WindowsForm.Form1.resources
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\_2048_WindowsForm.Properties.Resources.resources
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\2048_WindowsForm.csproj.GenerateResource.cache
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\2048_WindowsForm.csproj.CoreCompileInputs.cache
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\2048_WindowsForm.exe
+C:\Users\pm69duw\source\repos\2048_WindowsForm\2048_WindowsForm\obj\Debug\2048_WindowsForm.pdb
