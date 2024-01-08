@@ -37,7 +37,7 @@
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("Arial Rounded MT Bold", 63.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Title.Location = new System.Drawing.Point(12, 10);
+            this.Title.Location = new System.Drawing.Point(130, 10);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(246, 98);
             this.Title.TabIndex = 0;
@@ -47,7 +47,7 @@
             // 
             this.ScoreText.AutoSize = true;
             this.ScoreText.Font = new System.Drawing.Font("Arial Rounded MT Bold", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ScoreText.Location = new System.Drawing.Point(264, 22);
+            this.ScoreText.Location = new System.Drawing.Point(382, 22);
             this.ScoreText.Name = "ScoreText";
             this.ScoreText.Size = new System.Drawing.Size(147, 43);
             this.ScoreText.TabIndex = 1;
@@ -58,7 +58,7 @@
             this.Score.AutoSize = true;
             this.Score.BackColor = System.Drawing.Color.Transparent;
             this.Score.Font = new System.Drawing.Font("Arial Rounded MT Bold", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Score.Location = new System.Drawing.Point(264, 57);
+            this.Score.Location = new System.Drawing.Point(382, 57);
             this.Score.Margin = new System.Windows.Forms.Padding(0);
             this.Score.Name = "Score";
             this.Score.Size = new System.Drawing.Size(41, 43);
@@ -69,7 +69,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 571);
+            this.ClientSize = new System.Drawing.Size(675, 602);
             this.Controls.Add(this.Score);
             this.Controls.Add(this.ScoreText);
             this.Controls.Add(this.Title);

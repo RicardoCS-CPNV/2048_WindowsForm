@@ -33,7 +33,7 @@ namespace _2048_WindowsForm
                     //Le 20 + 100 * colonne détermine le placement du premier label
                     //Le 20 + 100 * ligne détermine le placement du label en Y
                     //Le 90, 90 est la taille du label
-                    labels[ligne, colonne].Bounds = new Rectangle(15 + 110 * colonne, 130 + 110 * ligne, 100, 100);
+                    labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
 
                     //Met le texte au centre du label
                     labels[ligne, colonne].TextAlign = ContentAlignment.MiddleCenter;
