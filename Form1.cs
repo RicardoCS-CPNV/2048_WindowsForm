@@ -74,7 +74,7 @@ namespace _2048_WindowsForm
                     labels[ligne, colonne] = new System.Windows.Forms.Label();
                     labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
                     labels[ligne, colonne].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                    labels[ligne, colonne].Font = new Font("Arial", 20, FontStyle.Bold);
+                    labels[ligne, colonne].Font = new Font("Arial Rounded MT Bold", 22, FontStyle.Bold);
 
                     Controls.Add(labels[ligne, colonne]);
                 }
@@ -112,7 +112,7 @@ namespace _2048_WindowsForm
         private void NombreAleatoire()
         {
             Random random = new Random();
-            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
 
             if (!AjoutNombrePossible())
             {
