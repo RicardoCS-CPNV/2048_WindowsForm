@@ -19,29 +19,8 @@ namespace _2048_WindowsForm
         {
             InitializeComponent();
             InitJeu();
-        }
-
-        public void InitJeu()
-        {
-            for (int ligne = 0; ligne < table.GetLength(0); ligne++)
-            {
-                for (int colonne = 0; colonne < table.GetLength(1); colonne++)
-                {
-                    labels[ligne, colonne] = new System.Windows.Forms.Label();
-                    labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
-                    labels[ligne, colonne].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                    labels[ligne, colonne].Font = new Font("Arial", 20, FontStyle.Bold);
-
-                    Controls.Add(labels[ligne, colonne]);
-                }
-            }
-
-            for (int i = 0; i < 2; i++)
-            {
-                NombreAleatoire();
-                Affiche();
-            }
-
+            this.KeyPreview = true;
+            
             this.KeyDown += new KeyEventHandler((sender, e) =>
             {
                 // Le contenu du gestionnaire d'événements KeyDown
@@ -89,6 +68,28 @@ namespace _2048_WindowsForm
             });
         }
 
+        public void InitJeu()
+        {
+            for (int ligne = 0; ligne < table.GetLength(0); ligne++)
+            {
+                for (int colonne = 0; colonne < table.GetLength(1); colonne++)
+                {
+                    labels[ligne, colonne] = new System.Windows.Forms.Label();
+                    labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
+                    labels[ligne, colonne].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+                    labels[ligne, colonne].Font = new Font("Arial", 20, FontStyle.Bold);
+
+                    Controls.Add(labels[ligne, colonne]);
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                NombreAleatoire();
+                Affiche();
+            }
+        }
+
         private void Affiche()
         {
             //réaffiche tout le tableau avec les bonnes couleurs et les bons textes, conformément au tableau jeu
@@ -100,12 +101,12 @@ namespace _2048_WindowsForm
                         labels[ligne, colonne].Text = (table[ligne, colonne]).ToString();
                     else
                         labels[ligne, colonne].Text = "";
-                    labels[ligne, colonne].BackColor = GetColor(table[ligne, colonne]);
+                    labels[ligne, colonne].BackColor = Couleur(table[ligne, colonne]);
                 }
             }
         }
 
-        private Color GetColor(int nombre)
+        private Color Couleur(int nombre)
         {
             int index = (int)Math.Log(nombre, 2);
             return index >= 0 && index < color.Length ? color[index] : Color.Snow;
@@ -114,7 +115,7 @@ namespace _2048_WindowsForm
         private void NombreAleatoire()
         {
             Random random = new Random();
-            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
 
             if (!AjoutNombrePossible())
             {
@@ -150,49 +151,7 @@ namespace _2048_WindowsForm
             return false;
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (!Defaite)
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.Left:
-                    case Keys.Up:
-                    case Keys.Right:
-                    case Keys.Down:
-                        bool tableChange = DetectionFleche(e.KeyCode);
-                        if (tableChange)
-                        {
-                            NombreAleatoire();
-                        }
-
-                        Affiche();
-
-                        if (Victoire())
-                        {
-                            MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
-                        }
-                        else if (!TableauRempli())
-                        {
-                            MessageBox.Show("Game Lost", "Défaite");
-                            Defaite = true;
-                        }
-                        break;
-
-                    case Keys.C:
-                        Application.Exit();
-                        break;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Vous avez perdu. Appuyez sur 'C' pour quitter.", "Défaite");
-                if (e.KeyCode == Keys.C)
-                {
-                    Application.Exit();
-                }
-            }
-        }
+        
 
         private bool DetectionFleche(Keys key)
         {

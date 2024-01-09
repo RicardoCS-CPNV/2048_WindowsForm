@@ -69,7 +69,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 602);
+            this.ClientSize = new System.Drawing.Size(675, 636);
             this.Controls.Add(this.Score);
             this.Controls.Add(this.ScoreText);
             this.Controls.Add(this.Title);
