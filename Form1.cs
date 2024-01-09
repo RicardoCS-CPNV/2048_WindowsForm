@@ -14,6 +14,7 @@ namespace _2048_WindowsForm
         static Color[] color = { Color.Snow, Color.AntiqueWhite, Color.NavajoWhite, Color.BurlyWood, Color.Goldenrod, Color.Chocolate, Color.SaddleBrown, Color.Brown, Color.AliceBlue, Color.LightGray, Color.Gray, Color.LightSlateGray, Color.DeepPink };
         static int score = 0;
         bool Defaite = false;
+        static bool win = false;
 
         public Form1()
         {
@@ -40,12 +41,8 @@ namespace _2048_WindowsForm
                             }
 
                             Affiche();
-
-                            if (Victoire())
-                            {
-                                MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
-                            }
-                            else if (!TableauRempli())
+                            Victoire();
+                            if (!TableauRempli())
                             {
                                 MessageBox.Show("Game Lost", "Défaite");
                                 Defaite = true;
@@ -115,7 +112,7 @@ namespace _2048_WindowsForm
         private void NombreAleatoire()
         {
             Random random = new Random();
-            int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
 
             if (!AjoutNombrePossible())
             {
@@ -150,8 +147,6 @@ namespace _2048_WindowsForm
             }
             return false;
         }
-
-        
 
         private bool DetectionFleche(Keys key)
         {
@@ -297,8 +292,11 @@ namespace _2048_WindowsForm
             {
                 for (int col = 0; col < table.GetLength(1); col++)
                 {
-                    if (table[row, col] >= 2048)
-                        return true;
+                    if (table[row, col] == 2048 && win == false)
+                    {
+                        win = true;
+                        MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
+                    }
                 }
             }
             return false;
