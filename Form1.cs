@@ -1,22 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection.Emit;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace _2048_WindowsForm
 {
     public partial class Form1 : Form
     {
-        static Label[,] labels = new Label[4, 4]; //Création du tableau de labels
-        static int[,] table = new int[4, 4]; //Création du tableau ud jeu
-        static Color[] color = { Color.Snow, Color.Beige, Color.MistyRose, Color.SandyBrown, Color.Orange, Color.Tomato, };
+        static System.Windows.Forms.Label[,] labels = new System.Windows.Forms.Label[4, 4];
+        static int[,] table = new int[4, 4];
+        static Color[] color = { Color.Snow, Color.AntiqueWhite, Color.NavajoWhite, Color.BurlyWood, Color.Goldenrod, Color.Chocolate, Color.SaddleBrown, Color.Brown, Color.AliceBlue, Color.LightGray, Color.Gray, Color.LightSlateGray, Color.DeepPink };
         static int score = 0;
         bool Defaite = false;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,338 +25,324 @@ namespace _2048_WindowsForm
         {
             for (int ligne = 0; ligne < table.GetLength(0); ligne++)
             {
-                for (int colonne = 0; colonne < table.GetLength(0); colonne++)
+                for (int colonne = 0; colonne < table.GetLength(1); colonne++)
                 {
-                    labels[ligne, colonne] = new Label(); //Création du tableau
-
-                    //Le 20 + 100 * colonne détermine le placement du premier label
-                    //Le 20 + 100 * ligne détermine le placement du label en Y
-                    //Le 90, 90 est la taille du label
+                    labels[ligne, colonne] = new System.Windows.Forms.Label();
                     labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
-
-                    //Met le texte au centre du label
-                    labels[ligne, colonne].TextAlign = ContentAlignment.MiddleCenter;
+                    labels[ligne, colonne].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                     labels[ligne, colonne].Font = new Font("Arial", 20, FontStyle.Bold);
 
                     Controls.Add(labels[ligne, colonne]);
                 }
             }
-            //Génlration des 2 nombres aléatoires
+
             for (int i = 0; i < 2; i++)
             {
                 NombreAleatoire();
-                affiche();
+                Affiche();
             }
-            while (true)
+
+            this.KeyDown += new KeyEventHandler((sender, e) =>
             {
-                //Tant que les conditions sont remplies, l'utilisateur reste dans la boucle if
+                // Le contenu du gestionnaire d'événements KeyDown
                 if (!Defaite)
                 {
-                    ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-                    if (keyInfo.Key == Keys.Left ||
-                        keyInfo.Key == ConsoleKey.UpArrow ||
-                        keyInfo.Key == ConsoleKey.RightArrow ||
-                        keyInfo.Key == ConsoleKey.DownArrow)
+                    switch (e.KeyData)
                     {
-                        bool tableChange = DetectionFleche(keyInfo.Key);
+                        case Keys.Left:
+                        case Keys.Up:
+                        case Keys.Right:
+                        case Keys.Down:
+                            bool tableChange = DetectionFleche(e.KeyData);
+                            if (tableChange)
+                            {
+                                Score.Text = score.ToString();
+                                NombreAleatoire();
+                            }
+
+                            Affiche();
+
+                            if (Victoire())
+                            {
+                                MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
+                            }
+                            else if (!TableauRempli())
+                            {
+                                MessageBox.Show("Game Lost", "Défaite");
+                                Defaite = true;
+                            }
+                            break;
+
+                        case Keys.C:
+                            Application.Exit();
+                            break;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vous avez perdu. Appuyez sur 'C' pour quitter.", "Défaite");
+                    if (e.KeyData == Keys.C)
+                    {
+                        Application.Exit();
+                    }
+                }
+            });
+        }
+
+        private void Affiche()
+        {
+            //réaffiche tout le tableau avec les bonnes couleurs et les bons textes, conformément au tableau jeu
+            for (int ligne = 0; ligne < 4; ligne++)
+            {
+                for (int colonne = 0; colonne < 4; colonne++)
+                {
+                    if (table[ligne, colonne] > 0)
+                        labels[ligne, colonne].Text = (table[ligne, colonne]).ToString();
+                    else
+                        labels[ligne, colonne].Text = "";
+                    labels[ligne, colonne].BackColor = GetColor(table[ligne, colonne]);
+                }
+            }
+        }
+
+        private Color GetColor(int nombre)
+        {
+            int index = (int)Math.Log(nombre, 2);
+            return index >= 0 && index < color.Length ? color[index] : Color.Snow;
+        }
+
+        private void NombreAleatoire()
+        {
+            Random random = new Random();
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
+
+            if (!AjoutNombrePossible())
+            {
+                return;
+            }
+
+            bool caseVide = false;
+            while (!caseVide)
+            {
+                int randomLine = random.Next(0, 4);
+                int randomLine2 = random.Next(0, 4);
+
+                if (table[randomLine, randomLine2] == 0)
+                {
+                    table[randomLine, randomLine2] = randomNumber2;
+                    caseVide = true;
+                }
+            }
+        }
+
+        private bool AjoutNombrePossible()
+        {
+            for (int row = 0; row < table.GetLength(0); row++)
+            {
+                for (int col = 0; col < table.GetLength(1); col++)
+                {
+                    if (table[row, col] == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!Defaite)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Left:
+                    case Keys.Up:
+                    case Keys.Right:
+                    case Keys.Down:
+                        bool tableChange = DetectionFleche(e.KeyCode);
                         if (tableChange)
                         {
                             NombreAleatoire();
                         }
 
-                        Console.Clear();
-                        affiche();
+                        Affiche();
 
                         if (Victoire())
                         {
-                            Console.ForegroundColor = ConsoleColor.Green;
-                            MessageBox.Show("\nTu as gagné, tu peux continuer à jouer !!!");
+                            MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
                         }
                         else if (!TableauRempli())
                         {
-                            Console.Clear();
-                            affiche();
-                            Console.ForegroundColor = ConsoleColor.Red;
-                            MessageBox.Show("Game Lost");
+                            MessageBox.Show("Game Lost", "Défaite");
                             Defaite = true;
                         }
-                    }
-                    else if (keyInfo.Key == ConsoleKey.C)
-                    {
-                        return; //Quitte le programme
-                    }
-                    else
-                    {
-                        MessageBox.Show("Veuillez taper une touche valide.");
-                    }
-                }
-                else //L'utilisateur vient de perdre la partie
-                {
-                    affiche();
-                    MessageBox.Show("\nVous avez perdu. Appuyez sur 'C' pour quitter.");
-                }
-
-            }
-
-            void affiche()
-            {
-                for (int ligne = 0; ligne < table.GetLength(0); ligne++)
-                {
-                    for (int colonne = 0; colonne < table.GetLength(0); colonne++)
-                    {
-                        if (table[ligne, colonne] > 0)
-                        {
-                            labels[ligne, colonne].Text = table[ligne, colonne].ToString();
-                        }
-                        else
-                        {
-                            labels[ligne, colonne].Text = "";
-                        }
-                        labels[ligne, colonne].BackColor = color[table[ligne, colonne]];
-                    }
-                }
-            }
-
-            //Créer un nombre aléatoire et selectionne une tuile aléatoire
-            void NombreAleatoire()
-            {
-                Random random = new Random();
-                int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
-
-                if (!AjoutNombrePossible())
-                {
-                    return;
-                }
-
-                bool caseVide = false;
-                while (!caseVide)
-                {
-                    int randomLine = random.Next(0, 4);
-                    int randomLine2 = random.Next(0, 4);
-
-                    if (table[randomLine, randomLine2] == 0)
-                    {
-                        table[randomLine, randomLine2] = randomNumber2;
-                        caseVide = true;
-                    }
-                }
-            }
-
-            //Regarde si la valeur est de 0
-            bool AjoutNombrePossible()
-            {
-                for (int row = 0; row < table.GetLength(0); row++)
-                {
-                    for (int col = 0; col < table.GetLength(1); col++)
-                    {
-                        if (table[row, col] == 0)
-                        {
-                            return true;
-                        }
-                    }
-                }
-                return false;
-            }
-
-
-            /*public void newVide()
-            {
-                //Génération d'un tableau des cases vides, de 0 à 16
-                List<int> aVide = new List<int>();
-                for (int ligne = 0; ligne < table.GetLength(0); ligne++)
-                {
-                    for (int colonne = 0; colonne < table.GetLength(0); colonne++)
-                    {
-                        if (table[ligne, colonne] == 0)
-                        {
-                            aVide.Add(4 * ligne + colonne); //Stocker le num de case
-                        }
-                    }
-                }
-
-                //Prendre une de ces cases aléatoirement
-                if (aVide.Count > 0)
-                {
-                    Random aleatoire = new Random();
-                    int nalea = aleatoire.Next(aVide.Count); //Génère un entier aléatoire
-                    table[aVide[nalea] / 4, aVide[nalea] % 4] = 1; //Met un 2 (2 puissamce 1) dans la case choisie
-                    affiche();
-                }
-
-            }*/
-
-            //Détection des flèches
-            bool DetectionFleche(ConsoleKey key)
-            {
-                int[,] tableTest = (int[,])table.Clone(); //Créer une copie du tableau avant de faire le mouvement
-                int[] table1D;
-                switch (key)
-                {
-                    //Flêche du haut
-                    case ConsoleKey.UpArrow:
-                        for (int i = 0; i < 4; i++)
-                        {
-                            table1D = MouvementFusion(table[0, i], table[1, i], table[2, i], table[3, i]);
-                            table[0, i] = table1D[0];
-                            table[1, i] = table1D[1];
-                            table[2, i] = table1D[2];
-                            table[3, i] = table1D[3];
-                        }
-                        affiche();
                         break;
 
-                    //Flêche du bas
-                    case ConsoleKey.DownArrow:
-                        for (int i = 0; i < 4; i++)
-                        {
-                            table1D = MouvementFusion(table[3, i], table[2, i], table[1, i], table[0, i]);
-                            table[0, i] = table1D[3];
-                            table[1, i] = table1D[2];
-                            table[2, i] = table1D[1];
-                            table[3, i] = table1D[0];
-                        }
-                        affiche();
-                        break;
-
-                    //Flêche de gauche
-                    case ConsoleKey.LeftArrow:
-                        for (int i = 0; i < 4; i++)
-                        {
-                            table1D = MouvementFusion(table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
-                            table[i, 0] = table1D[0];
-                            table[i, 1] = table1D[1];
-                            table[i, 2] = table1D[2];
-                            table[i, 3] = table1D[3];
-                        }
-                        affiche();
-                        break;
-
-                    //Flêche de droite
-                    case ConsoleKey.RightArrow:
-                        for (int i = 0; i < 4; i++)
-                        {
-                            table1D = MouvementFusion(table[i, 3], table[i, 2], table[i, 1], table[i, 0]);
-                            table[i, 0] = table1D[3];
-                            table[i, 1] = table1D[2];
-                            table[i, 2] = table1D[1];
-                            table[i, 3] = table1D[0];
-                        }
-                        affiche();
-                        break;
-
-                    //C quitte le programme
-                    case ConsoleKey.C:
-                        break;
-
-                    //Affiche un message d'erreur et demande d'appuyer sur une flêche
-                    default:
-                        Console.WriteLine("Veuillez taper une touche valide.");
+                    case Keys.C:
+                        Application.Exit();
                         break;
                 }
-                return ChangementTable(tableTest, table); //Verifie si le tableau a été modifié après le mouvement
             }
-
-            //Gère le mouvement et la fusion des tuiles
-            int[] MouvementFusion(int nb0, int nb1, int nb2, int nb3)
+            else
             {
-                //Gère le mouvement
-                if (nb2 == 0 && nb3 > 0)
+                MessageBox.Show("Vous avez perdu. Appuyez sur 'C' pour quitter.", "Défaite");
+                if (e.KeyCode == Keys.C)
                 {
-                    nb2 = nb3;
-                    nb3 = 0;
+                    Application.Exit();
                 }
-                if (nb1 == 0 && nb2 > 0)
-                {
-                    nb1 = nb2;
-                    nb2 = nb3;
-                    nb3 = 0;
-                }
-                if (nb0 == 0 && nb1 > 0)
-                {
-                    nb0 = nb1;
-                    nb1 = nb2;
-                    nb2 = nb3;
-                    nb3 = 0;
-                }
-                //Gère la fusion
-                if (nb0 == nb1)
-                {
-                    nb0 += nb1;
-                    nb1 = nb2;
-                    nb2 = nb3;
-                    nb3 = 0;
-                    score += nb0;
-                }
-                if (nb1 == nb2)
-                {
-                    nb1 += nb2;
-                    nb2 = nb3;
-                    nb3 = 0;
-                    score += nb1;
-                }
-                if (nb2 == nb3)
-                {
-                    nb2 += nb3;
-                    nb3 = 0;
-                    score += nb2;
-                }
-                int[] tableau = { nb0, nb1, nb2, nb3 };
-                return tableau;
             }
+        }
 
-            //Verifie si le tableau est remplie et si des mouvements sont encores possible
-            bool TableauRempli()
+        private bool DetectionFleche(Keys key)
+        {
+            int[,] tableTest = (int[,])table.Clone();
+            int[] table1D;
+            switch (key)
             {
-                for (int row = 0; row < table.GetLength(0); row++)
-                {
-                    for (int col = 0; col < table.GetLength(1); col++)
+                case Keys.Up:
+                    for (int i = 0; i < 4; i++)
                     {
-                        if (table[row, col] == 0)
-                            return true; //Trouve un 0 dans le tableau
+                        table1D = MouvementFusion(table[0, i], table[1, i], table[2, i], table[3, i]);
+                        table[0, i] = table1D[0];
+                        table[1, i] = table1D[1];
+                        table[2, i] = table1D[2];
+                        table[3, i] = table1D[3];
+                    }
+                    Affiche();
+                    break;
 
-                        if (row < table.GetLength(0) - 1 && table[row, col] == table[row + 1, col])
-                            return true; //Mouvement Verticale possible
+                case Keys.Down:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        table1D = MouvementFusion(table[3, i], table[2, i], table[1, i], table[0, i]);
+                        table[0, i] = table1D[3];
+                        table[1, i] = table1D[2];
+                        table[2, i] = table1D[1];
+                        table[3, i] = table1D[0];
+                    }
+                    Affiche();
+                    break;
 
-                        if (col < table.GetLength(1) - 1 && table[row, col] == table[row, col + 1])
-                            return true; //M ouvement Horizontale possible
+                case Keys.Left:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        table1D = MouvementFusion(table[i, 0], table[i, 1], table[i, 2], table[i, 3]);
+                        table[i, 0] = table1D[0];
+                        table[i, 1] = table1D[1];
+                        table[i, 2] = table1D[2];
+                        table[i, 3] = table1D[3];
+                    }
+                    Affiche();
+                    break;
+
+                case Keys.Right:
+                    for (int i = 0; i < 4; i++)
+                    {
+                        table1D = MouvementFusion(table[i, 3], table[i, 2], table[i, 1], table[i, 0]);
+                        table[i, 0] = table1D[3];
+                        table[i, 1] = table1D[2];
+                        table[i, 2] = table1D[1];
+                        table[i, 3] = table1D[0];
+                    }
+                    Affiche();
+                    break;
+            }
+            return ChangementTable(tableTest, table);
+        }
+
+        private int[] MouvementFusion(int nb0, int nb1, int nb2, int nb3)
+        {
+            if (nb2 == 0 && nb3 > 0)
+            {
+                nb2 = nb3;
+                nb3 = 0;
+            }
+            if (nb1 == 0 && nb2 > 0)
+            {
+                nb1 = nb2;
+                nb2 = nb3;
+                nb3 = 0;
+            }
+            if (nb0 == 0 && nb1 > 0)
+            {
+                nb0 = nb1;
+                nb1 = nb2;
+                nb2 = nb3;
+                nb3 = 0;
+            }
+
+            if (nb0 == nb1)
+            {
+                nb0 += nb1;
+                nb1 = nb2;
+                nb2 = nb3;
+                nb3 = 0;
+                score += nb0;
+            }
+            if (nb1 == nb2)
+            {
+                nb1 += nb2;
+                nb2 = nb3;
+                nb3 = 0;
+                score += nb1;
+            }
+            if (nb2 == nb3)
+            {
+                nb2 += nb3;
+                nb3 = 0;
+                score += nb2;
+            }
+
+            int[] tableau = { nb0, nb1, nb2, nb3 };
+            return tableau;
+        }
+
+        private bool TableauRempli()
+        {
+            for (int row = 0; row < table.GetLength(0); row++)
+            {
+                for (int col = 0; col < table.GetLength(1); col++)
+                {
+                    if (table[row, col] == 0)
+                        return true;
+
+                    if (row < table.GetLength(0) - 1 && table[row, col] == table[row + 1, col])
+                        return true;
+
+                    if (col < table.GetLength(1) - 1 && table[row, col] == table[row, col + 1])
+                        return true;
+                }
+            }
+            return false;
+        }
+
+        private bool ChangementTable(int[,] tableOriginal, int[,] tableCourante)
+        {
+            for (int row = 0; row < tableOriginal.GetLength(0); row++)
+            {
+                for (int col = 0; col < tableOriginal.GetLength(1); col++)
+                {
+                    if (tableOriginal[row, col] != tableCourante[row, col])
+                    {
+                        return true;
                     }
                 }
-
-                return false;
             }
+            return false;
+        }
 
-            //Verifie si le tableau est identique ou non
-            bool ChangementTable(int[,] tableOriginal, int[,] tableCourante)
+        private bool Victoire()
+        {
+            for (int row = 0; row < table.GetLength(0); row++)
             {
-                for (int row = 0; row < tableOriginal.GetLength(0); row++)
+                for (int col = 0; col < table.GetLength(1); col++)
                 {
-                    for (int col = 0; col < tableOriginal.GetLength(1); col++)
-                    {
-                        if (tableOriginal[row, col] != tableCourante[row, col])
-                        {
-                            return true;
-                        }
-                    }
+                    if (table[row, col] >= 2048)
+                        return true;
                 }
-                return false;
             }
-
-            //Verifie la victoire
-            bool Victoire()
-            {
-                for (int row = 0; row < table.GetLength(0); row++)
-                {
-                    for (int col = 0; col < table.GetLength(1); col++)
-                    {
-                        if (table[row, col] >= 2048)
-                            return true;
-                    }
-                }
-                return false;
-            }
-
-
-
+            return false;
         }
     }
 }
