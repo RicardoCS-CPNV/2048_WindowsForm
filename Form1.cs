@@ -78,7 +78,7 @@ namespace _2048_WindowsForm
                 for (int colonne = 0; colonne < table.GetLength(1); colonne++)
                 {
                     labels[ligne, colonne] = new System.Windows.Forms.Label();
-                    labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 100, 100);
+                    labels[ligne, colonne].Bounds = new Rectangle(130 + 110 * colonne, 120 + 110 * ligne, 105, 105);
                     labels[ligne, colonne].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
                     labels[ligne, colonne].Font = new Font("Arial Rounded MT Bold", 22, FontStyle.Bold);
 
@@ -87,7 +87,7 @@ namespace _2048_WindowsForm
             }
             Panel background = new Panel();
             background.BackColor = Color.Salmon;
-            background.Size = new Size(450, 450);
+            background.Size = new Size(455, 455);
             background.Location = new Point(120, 110);
             Controls.Add(background);
 
@@ -332,6 +332,23 @@ namespace _2048_WindowsForm
         private void btnQuitterLose_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        //Mettre une bordure au panel de défaite
+        private void pnlLose_Paint(object sender, PaintEventArgs e)
+        {
+            if (pnlLose.BorderStyle == BorderStyle.FixedSingle)
+                {
+                    int thickness = 6;
+                    int halfThickness = thickness / 2;
+                    using (Pen p = new Pen(Color.IndianRed, thickness))
+                    {
+                        e.Graphics.DrawRectangle(p, new Rectangle(halfThickness,
+                                                                  halfThickness,
+                                                                  pnlLose.ClientSize.Width - thickness,
+                                                                  pnlLose.ClientSize.Height - thickness));
+                    }
+            }
         }
     }
 }
