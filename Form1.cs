@@ -71,6 +71,8 @@ namespace _2048_WindowsForm
 
         public void InitJeu()
         {
+
+
             for (int ligne = 0; ligne < table.GetLength(0); ligne++)
             {
                 for (int colonne = 0; colonne < table.GetLength(1); colonne++)
@@ -83,6 +85,11 @@ namespace _2048_WindowsForm
                     Controls.Add(labels[ligne, colonne]);
                 }
             }
+            Panel background = new Panel();
+            background.BackColor = Color.Salmon;
+            background.Size = new Size(450, 450);
+            background.Location = new Point(120, 110);
+            Controls.Add(background);
 
             for (int i = 0; i < 2; i++)
             {
@@ -116,7 +123,7 @@ namespace _2048_WindowsForm
         private void NombreAleatoire()
         {
             Random random = new Random();
-            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
 
             if (!AjoutNombrePossible())
             {
