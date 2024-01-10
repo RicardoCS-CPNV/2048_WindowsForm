@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ePOSOne.btnProduct;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Reflection.Emit;
+using System.Runtime.Remoting.Channels;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 
@@ -19,9 +21,12 @@ namespace _2048_WindowsForm
         public Form1()
         {
             InitializeComponent();
+            pictureBox2.BackColor = Color.Transparent;
+
+            pnlLose.Visible = false;
             InitJeu();
             this.KeyPreview = true;
-            
+
             this.KeyDown += new KeyEventHandler((sender, e) =>
             {
                 // Le contenu du gestionnaire d'événements KeyDown
@@ -44,7 +49,6 @@ namespace _2048_WindowsForm
                             Victoire();
                             if (!TableauRempli())
                             {
-                                MessageBox.Show("Game Lost", "Défaite");
                                 Defaite = true;
                             }
                             break;
@@ -56,7 +60,7 @@ namespace _2048_WindowsForm
                 }
                 else
                 {
-                    MessageBox.Show("Vous avez perdu. Appuyez sur 'C' pour quitter.", "Défaite");
+                    pnlLose.Visible = true;
                     if (e.KeyData == Keys.C)
                     {
                         Application.Exit();
@@ -112,7 +116,7 @@ namespace _2048_WindowsForm
         private void NombreAleatoire()
         {
             Random random = new Random();
-            int randomNumber2 = (random.Next(10) == 0) ? 4 : 2;
+            int randomNumber2 = (random.Next(10) == 0) ? 4 : 1024;
 
             if (!AjoutNombrePossible())
             {
@@ -295,11 +299,32 @@ namespace _2048_WindowsForm
                     if (table[row, col] == 2048 && win == false)
                     {
                         win = true;
-                        MessageBox.Show("Tu as gagné, tu peux continuer à jouer !!!", "Victoire");
+                        pnlWin.Visible = true;
                     }
                 }
             }
             return false;
+        }
+
+        private void button_WOC1_Click(object sender, EventArgs e)
+        {
+
+            Application.Exit();
+        }
+
+        private void btnContinue_Click(object sender, EventArgs e)
+        {
+            pnlWin.Visible = false;
+        }
+
+        private void button_WOC1_Click_1(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void btnQuitterLose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
