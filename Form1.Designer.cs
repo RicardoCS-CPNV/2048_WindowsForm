@@ -33,21 +33,21 @@
             this.ScoreText = new System.Windows.Forms.Label();
             this.Score = new System.Windows.Forms.Label();
             this.pnlQuitter = new System.Windows.Forms.Panel();
+            this.btnQuitter = new ePOSOne.btnProduct.Button_WOC();
             this.pnlWin = new System.Windows.Forms.Panel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnContinue = new ePOSOne.btnProduct.Button_WOC();
+            this.button_WOC1 = new ePOSOne.btnProduct.Button_WOC();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnlLose = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.btnQuitterLose = new ePOSOne.btnProduct.Button_WOC();
-            this.btnContinue = new ePOSOne.btnProduct.Button_WOC();
-            this.button_WOC1 = new ePOSOne.btnProduct.Button_WOC();
-            this.btnQuitter = new ePOSOne.btnProduct.Button_WOC();
             this.pnlQuitter.SuspendLayout();
             this.pnlWin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.pnlLose.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // Title
@@ -92,6 +92,27 @@
             this.pnlQuitter.Size = new System.Drawing.Size(125, 55);
             this.pnlQuitter.TabIndex = 3;
             // 
+            // btnQuitter
+            // 
+            this.btnQuitter.BorderColor = System.Drawing.Color.IndianRed;
+            this.btnQuitter.ButtonColor = System.Drawing.Color.Salmon;
+            this.btnQuitter.FlatAppearance.BorderSize = 0;
+            this.btnQuitter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitter.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitter.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnQuitter.Location = new System.Drawing.Point(0, 0);
+            this.btnQuitter.Name = "btnQuitter";
+            this.btnQuitter.OnHoverBorderColor = System.Drawing.Color.IndianRed;
+            this.btnQuitter.OnHoverButtonColor = System.Drawing.Color.DarkRed;
+            this.btnQuitter.OnHoverTextColor = System.Drawing.Color.White;
+            this.btnQuitter.Size = new System.Drawing.Size(125, 45);
+            this.btnQuitter.TabIndex = 0;
+            this.btnQuitter.TabStop = false;
+            this.btnQuitter.Text = "Quitter";
+            this.btnQuitter.TextColor = System.Drawing.Color.White;
+            this.btnQuitter.UseVisualStyleBackColor = true;
+            this.btnQuitter.Click += new System.EventHandler(this.button_WOC1_Click);
+            // 
             // pnlWin
             // 
             this.pnlWin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(180)))));
@@ -107,43 +128,6 @@
             this.pnlWin.TabIndex = 4;
             this.pnlWin.Visible = false;
             // 
-            // pnlLose
-            // 
-            this.pnlLose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(180)))));
-            this.pnlLose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlLose.Controls.Add(this.label3);
-            this.pnlLose.Controls.Add(this.pictureBox1);
-            this.pnlLose.Controls.Add(this.btnQuitterLose);
-            this.pnlLose.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pnlLose.Location = new System.Drawing.Point(81, 211);
-            this.pnlLose.Name = "pnlLose";
-            this.pnlLose.Size = new System.Drawing.Size(537, 239);
-            this.pnlLose.TabIndex = 5;
-            this.pnlLose.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlLose_Paint);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(200, 59);
-            this.label3.MaximumSize = new System.Drawing.Size(400, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(251, 40);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "Tu as perdu ;(";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(6, 17);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(215, 217);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
@@ -155,39 +139,6 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(177, 74);
-            this.label1.MaximumSize = new System.Drawing.Size(400, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(270, 40);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tu as gagné !!!";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btnQuitterLose
-            // 
-            this.btnQuitterLose.BorderColor = System.Drawing.Color.IndianRed;
-            this.btnQuitterLose.ButtonColor = System.Drawing.Color.Salmon;
-            this.btnQuitterLose.FlatAppearance.BorderSize = 0;
-            this.btnQuitterLose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuitterLose.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitterLose.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnQuitterLose.Location = new System.Drawing.Point(252, 160);
-            this.btnQuitterLose.Name = "btnQuitterLose";
-            this.btnQuitterLose.OnHoverBorderColor = System.Drawing.Color.IndianRed;
-            this.btnQuitterLose.OnHoverButtonColor = System.Drawing.Color.DarkRed;
-            this.btnQuitterLose.OnHoverTextColor = System.Drawing.Color.White;
-            this.btnQuitterLose.Size = new System.Drawing.Size(125, 45);
-            this.btnQuitterLose.TabIndex = 1;
-            this.btnQuitterLose.TabStop = false;
-            this.btnQuitterLose.Text = "Quitter";
-            this.btnQuitterLose.TextColor = System.Drawing.Color.White;
-            this.btnQuitterLose.UseVisualStyleBackColor = true;
-            this.btnQuitterLose.Click += new System.EventHandler(this.btnQuitterLose_Click);
             // 
             // btnContinue
             // 
@@ -231,26 +182,75 @@
             this.button_WOC1.UseVisualStyleBackColor = true;
             this.button_WOC1.Click += new System.EventHandler(this.button_WOC1_Click_1);
             // 
-            // btnQuitter
+            // label1
             // 
-            this.btnQuitter.BorderColor = System.Drawing.Color.IndianRed;
-            this.btnQuitter.ButtonColor = System.Drawing.Color.Salmon;
-            this.btnQuitter.FlatAppearance.BorderSize = 0;
-            this.btnQuitter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnQuitter.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnQuitter.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnQuitter.Location = new System.Drawing.Point(0, 0);
-            this.btnQuitter.Name = "btnQuitter";
-            this.btnQuitter.OnHoverBorderColor = System.Drawing.Color.IndianRed;
-            this.btnQuitter.OnHoverButtonColor = System.Drawing.Color.DarkRed;
-            this.btnQuitter.OnHoverTextColor = System.Drawing.Color.White;
-            this.btnQuitter.Size = new System.Drawing.Size(125, 45);
-            this.btnQuitter.TabIndex = 0;
-            this.btnQuitter.TabStop = false;
-            this.btnQuitter.Text = "Quitter";
-            this.btnQuitter.TextColor = System.Drawing.Color.White;
-            this.btnQuitter.UseVisualStyleBackColor = true;
-            this.btnQuitter.Click += new System.EventHandler(this.button_WOC1_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(177, 74);
+            this.label1.MaximumSize = new System.Drawing.Size(400, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(270, 40);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Tu as gagné !!!";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnlLose
+            // 
+            this.pnlLose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(180)))));
+            this.pnlLose.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlLose.Controls.Add(this.label3);
+            this.pnlLose.Controls.Add(this.pictureBox1);
+            this.pnlLose.Controls.Add(this.btnQuitterLose);
+            this.pnlLose.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pnlLose.Location = new System.Drawing.Point(81, 211);
+            this.pnlLose.Name = "pnlLose";
+            this.pnlLose.Size = new System.Drawing.Size(537, 239);
+            this.pnlLose.TabIndex = 5;
+            this.pnlLose.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlLose_Paint);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Arial Rounded MT Bold", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(200, 59);
+            this.label3.MaximumSize = new System.Drawing.Size(400, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(251, 40);
+            this.label3.TabIndex = 3;
+            this.label3.Text = "Tu as perdu ;(";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(6, 17);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(215, 217);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 2;
+            this.pictureBox1.TabStop = false;
+            // 
+            // btnQuitterLose
+            // 
+            this.btnQuitterLose.BorderColor = System.Drawing.Color.IndianRed;
+            this.btnQuitterLose.ButtonColor = System.Drawing.Color.Salmon;
+            this.btnQuitterLose.FlatAppearance.BorderSize = 0;
+            this.btnQuitterLose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnQuitterLose.Font = new System.Drawing.Font("Arial Rounded MT Bold", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnQuitterLose.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnQuitterLose.Location = new System.Drawing.Point(252, 160);
+            this.btnQuitterLose.Name = "btnQuitterLose";
+            this.btnQuitterLose.OnHoverBorderColor = System.Drawing.Color.IndianRed;
+            this.btnQuitterLose.OnHoverButtonColor = System.Drawing.Color.DarkRed;
+            this.btnQuitterLose.OnHoverTextColor = System.Drawing.Color.White;
+            this.btnQuitterLose.Size = new System.Drawing.Size(125, 45);
+            this.btnQuitterLose.TabIndex = 1;
+            this.btnQuitterLose.TabStop = false;
+            this.btnQuitterLose.Text = "Quitter";
+            this.btnQuitterLose.TextColor = System.Drawing.Color.White;
+            this.btnQuitterLose.UseVisualStyleBackColor = true;
+            this.btnQuitterLose.Click += new System.EventHandler(this.btnQuitterLose_Click);
             // 
             // Form1
             // 
@@ -269,10 +269,10 @@
             this.pnlQuitter.ResumeLayout(false);
             this.pnlWin.ResumeLayout(false);
             this.pnlWin.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.pnlLose.ResumeLayout(false);
             this.pnlLose.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
